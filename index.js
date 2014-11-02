@@ -1,6 +1,6 @@
 var url = require('url');
 
-module.exports = function matrixUrl(href, opts) {
+module.exports = function matrixUrl(opts) {
   var _opts = {};
 
   if (!opts)
