@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/joshgillies/node-matrix-url/issues"
   },
-  "homepage": "https://github.com/joshgillies/node-matrix-url"
+  "homepage": "https://github.com/joshgillies/node-matrix-url",
+  "dependencies": {
+    "xtend": "^4.0.0"
+  }
 }
