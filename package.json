@@ -1,6 +1,6 @@
 {
   "name": "node-matrix-url",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A helper library for working with Squiz Matrix URLs",
   "main": "index.js",
   "scripts": {
