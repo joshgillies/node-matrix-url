@@ -3,6 +3,10 @@ node-matrix-url
 
 A helper library for working with Squiz Matrix URLs
 
+[![build status](https://secure.travis-ci.org/joshgillies/node-curli.svg)](http://travis-ci.org/joshgillies/node-matrix-url)
+
+[![NPM](https://nodei.co/npm/curli.png?downloads=true&stars=true)](https://nodei.co/npm/node-matrix-url/)
+
 Example
 -------
 
