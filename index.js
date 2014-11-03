@@ -4,9 +4,9 @@ var extend = require('xtend');
 module.exports = function matrixUrl(opts) {
   var _opts = {};
 
-  if (!opts)
-    _opts = url.parse(href);
-  if (opts && typeof opts.href === 'string')
+  if (typeof opts === 'string')
+    _opts = url.parse(opts);
+  if (typeof opts === 'object' && typeof opts.href === 'string')
     _opts = url.parse(opts.href);
 
   _opts.query = {
