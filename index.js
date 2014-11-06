@@ -26,7 +26,7 @@ module.exports = function matrixUrl(opts) {
       log_manager_3_log: opts.level || 'error',
       rand: opts.rand || '',
       log_manager_3_num_lines: opts.lines || '25',
-      log_manager_3_offset: ''
+      log_manager_3_offset: opts.offset || ''
     });
   }
 
