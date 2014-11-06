@@ -1,28 +1,54 @@
 var test = require('tape');
-var url = require('url');
 var matrixUrl = require('../');
 
-var defaults = {
-  href: 'http://matrix.dev/_admin'
+var DEFAULTS = {
+  href: 'http://matrix.dev/_admin/'
+};
+
+var testRunner = function testRunner(test) {
+  this.equal(test.test, DEFAULTS.href + test.search, test.description);
 };
 
 test('Basic functionality', function(t) {
-  var search = [
+  DEFAULTS.search = [
     '?SQ_BACKEND_PAGE=main',
     '&backend_section=am',
     '&am_section=edit_asset',
     '&assetid=',
     '&asset_ei_screen=',
     '&ignore_frames=1'
-  ].join('');
+  ];
+  var tests = [
+    {
+      description: 'URL as String',
+      search: DEFAULTS.search.join(''),
+      test: matrixUrl(DEFAULTS.href)
+    },
+    {
+      description: 'URL Object',
+      search: DEFAULTS.search.join(''),
+      test: matrixUrl(DEFAULTS)
+    },
+    {
+      description: 'Setting assetId',
+      search: [
+        '?SQ_BACKEND_PAGE=main',
+        '&backend_section=am',
+        '&am_section=edit_asset',
+        '&assetid=3',
+        '&asset_ei_screen=',
+        '&ignore_frames=1'
+      ].join(''),
+      test: matrixUrl({ href: DEFAULTS.href, assetId: 3 })
+    }
+  ];
 
-  t.equal(matrixUrl(defaults.href), defaults.href + search, 'URL as String');
-  t.equal(matrixUrl(url.parse(defaults.href)), defaults.href + search, 'URL Object');
+  tests.forEach(testRunner, t);
   t.end();
 });
 
 test('Screen value shorthand', function(t) {
-  var search = [
+  DEFAULTS.search = [
     '?SQ_BACKEND_PAGE=main',
     '&backend_section=am',
     '&am_section=edit_asset',
@@ -35,10 +61,52 @@ test('Screen value shorthand', function(t) {
     '&rand=',
     '&log_manager_3_num_lines=25',
     '&log_manager_3_offset='
-  ].join('');
+  ];
+  var tests = [
+    {
+      description: 'Default log screen',
+      search: DEFAULTS.search.join(''),
+      test: matrixUrl({
+        href: DEFAULTS.href,
+        screen: 'log'
+      })
+    },
+    {
+      description: 'Log screen with settings',
+      search: [
+        '?SQ_BACKEND_PAGE=main',
+        '&backend_section=am',
+        '&am_section=edit_asset',
+        '&assetid=3',
+        '&asset_ei_screen=',
+        '&ignore_frames=1',
+        '&log_manager_3_direct_connection=true',
+        '&log_manager_3_action=monitor',
+        '&log_manager_3_log=system',
+        '&rand=123456',
+        '&log_manager_3_num_lines=1000',
+        '&log_manager_3_offset=654321'
+      ].join(''),
+      test: matrixUrl({
+        href: DEFAULTS.href,
+        screen: 'log',
+        level: 'system',
+        rand: '123456',
+        lines: '1000',
+        offset: '654321'
+      })
+    },
+    {
+      description: 'Cannot override log screen assetId',
+      search: DEFAULTS.search.join(''),
+      test: matrixUrl({
+        href: DEFAULTS.href,
+        screen: 'log',
+        assetId: '23'
+      })
+    },
+  ];
 
-  defaults.screen = 'log';
-  t.equal(matrixUrl(defaults), defaults.href + search, 'Default log screen');
-  delete defaults.screen;
+  tests.forEach(testRunner, t);
   t.end();
 });
