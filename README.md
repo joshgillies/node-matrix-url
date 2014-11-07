@@ -12,8 +12,7 @@ Example
 
 ```js
 var matrixUrl = require('node-matrix-url');
-var href = matrixUrl({
-  href: 'http://mysource.matrix/_admin',
+var href = matrixUrl('http://mysource.matrix/_admin', {
   assetId: '3'
 });
 

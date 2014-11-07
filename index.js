@@ -1,12 +1,17 @@
 var url = require('url');
 var extend = require('xtend');
 
-module.exports = function matrixUrl(opts) {
+module.exports = function matrixUrl(href, opts) {
   var _opts = {};
+  opts = opts || {};
 
-  if (typeof opts === 'string')
-    _opts = url.parse(opts);
-  if (typeof opts === 'object' && typeof opts.href === 'string')
+  if (typeof href === 'object')
+    opts = href;
+
+  if (typeof href === 'string')
+    _opts = url.parse(href);
+
+  if (typeof opts.href === 'string')
     _opts = url.parse(opts.href);
 
   _opts.query = {

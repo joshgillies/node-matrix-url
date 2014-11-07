@@ -40,7 +40,19 @@ test('Basic functionality', function(t) {
         '&ignore_frames=1'
       ].join(''),
       test: matrixUrl({ href: DEFAULTS.href, assetId: 3 })
-    }
+    },
+    {
+      description: 'href as first argument with settings',
+      search: [
+        '?SQ_BACKEND_PAGE=main',
+        '&backend_section=am',
+        '&am_section=edit_asset',
+        '&assetid=3',
+        '&asset_ei_screen=',
+        '&ignore_frames=1'
+      ].join(''),
+      test: matrixUrl(DEFAULTS.href, { assetId: 3 })
+    },
   ];
 
   tests.forEach(testRunner, t);
@@ -66,8 +78,7 @@ test('Screen value shorthand', function(t) {
     {
       description: 'Default log screen',
       search: DEFAULTS.search.join(''),
-      test: matrixUrl({
-        href: DEFAULTS.href,
+      test: matrixUrl(DEFAULTS.href, {
         screen: 'log'
       })
     },
@@ -87,8 +98,7 @@ test('Screen value shorthand', function(t) {
         '&log_manager_3_num_lines=1000',
         '&log_manager_3_offset=654321'
       ].join(''),
-      test: matrixUrl({
-        href: DEFAULTS.href,
+      test: matrixUrl(DEFAULTS.href, {
         screen: 'log',
         level: 'system',
         rand: '123456',
@@ -99,8 +109,7 @@ test('Screen value shorthand', function(t) {
     {
       description: 'Cannot override log screen assetId',
       search: DEFAULTS.search.join(''),
-      test: matrixUrl({
-        href: DEFAULTS.href,
+      test: matrixUrl(DEFAULTS.href, {
         screen: 'log',
         assetId: '23'
       })
