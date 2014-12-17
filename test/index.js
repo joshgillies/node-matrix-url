@@ -59,7 +59,7 @@ test('Basic functionality', function(t) {
   t.end();
 });
 
-test('Screen value shorthand', function(t) {
+test('Log screen value shorthand', function(t) {
   DEFAULTS.search = [
     '?SQ_BACKEND_PAGE=main',
     '&backend_section=am',
@@ -113,7 +113,51 @@ test('Screen value shorthand', function(t) {
         screen: 'log',
         assetId: '23'
       })
+    }
+  ];
+
+  tests.forEach(testRunner, t);
+  t.end();
+});
+
+test('Hipo screen value shorthand', function(t) {
+  DEFAULTS.search = [
+    '?SQ_BACKEND_PAGE=main',
+    '&backend_section=am&',
+    'am_section=edit_asset&',
+    'assetid=123&',
+    'asset_ei_screen=&',
+    'ignore_frames=1&',
+    'SQ_ACTION=hipo&',
+    'hipo_source_code_name=hipo_job_acquire_locks-202cb962ac59075b964b07152d234b70'
+  ];
+  var tests = [
+    {
+      description: 'Default hipo screen',
+      search: DEFAULTS.search.join(''),
+      test: matrixUrl(DEFAULTS.href, {
+        assetId: '123',
+        screen: 'hipo'
+      })
     },
+    {
+      description: 'Hipo screen with settings',
+      search: [
+        '?SQ_BACKEND_PAGE=main',
+        '&backend_section=am&',
+        'am_section=edit_asset&',
+        'assetid=123&',
+        'asset_ei_screen=&',
+        'ignore_frames=1&',
+        'SQ_ACTION=hipo&',
+        'hipo_source_code_name=hipo_job_regenerate_design-202cb962ac59075b964b07152d234b70'
+      ].join(''),
+      test: matrixUrl(DEFAULTS.href, {
+        assetId: '123',
+        screen: 'hipo',
+        action: 'regenerateDesign'
+      })
+    }
   ];
 
   tests.forEach(testRunner, t);

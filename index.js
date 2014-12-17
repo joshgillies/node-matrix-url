@@ -1,7 +1,17 @@
 var url = require('url');
 var extend = require('xtend');
+var crypto = require('crypto');
 
-module.exports = function matrixUrl(href, opts) {
+var getHipoJob = function getHipoJob(action, assetId) {
+  var hash = crypto.createHash('md5').update(assetId).digest('hex');
+
+  return {
+    'acquireLocks': 'hipo_job_acquire_locks-' + hash,
+    'regenerateDesign': 'hipo_job_regenerate_design-' + hash
+  }[action || 'acquireLocks'];
+};
+
+var matrixUrl = function matrixUrl(href, opts) {
   var _opts = {};
   opts = opts || {};
 
@@ -35,5 +45,15 @@ module.exports = function matrixUrl(href, opts) {
     });
   }
 
+  if (/hipo/.test(opts.screen)) {
+    _opts.query = extend(_opts.query, {
+      SQ_ACTION: 'hipo',
+      hipo_source_code_name: getHipoJob(opts.action, opts.assetId),
+      SQ_BACKEND_PAGE: 'main'
+    });
+  }
+
   return url.format(_opts);
 };
+
+module.exports = matrixUrl;
