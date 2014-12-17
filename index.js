@@ -30,7 +30,8 @@ var matrixUrl = function matrixUrl(href, opts) {
     am_section: 'edit_asset',
     assetid: opts.assetId || '',
     asset_ei_screen: '',
-    ignore_frames: '1'
+    ignore_frames: '1',
+    sq_asset_path: opts.assetPath || ''
   };
 
   if (/log/.test(opts.screen)) {
@@ -48,8 +49,7 @@ var matrixUrl = function matrixUrl(href, opts) {
   if (/hipo/.test(opts.screen)) {
     _opts.query = extend(_opts.query, {
       SQ_ACTION: 'hipo',
-      hipo_source_code_name: getHipoJob(opts.action, opts.assetId),
-      SQ_BACKEND_PAGE: 'main'
+      hipo_source_code_name: getHipoJob(opts.action, opts.assetId)
     });
   }
 
